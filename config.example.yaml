@@ -1,0 +1,42 @@
+# Copy file ini ke config.yaml lalu sesuaikan dengan environment kamu.
+# Jangan commit config.yaml (berisi kredensial) ke git - lihat .gitignore.
+
+kafka:
+  bootstrap_servers: "broker1.internal:9093,broker2.internal:9093"
+  security_protocol: "SASL_SSL"   # PLAINTEXT | SSL | SASL_PLAINTEXT | SASL_SSL
+  sasl_mechanism: "SCRAM-SHA-512"  # PLAIN | SCRAM-SHA-256 | SCRAM-SHA-512 | GSSAPI
+  sasl_username: "audit-readonly"
+  sasl_password: "CHANGE_ME"        # sebaiknya inject via env var, jangan hardcode di repo
+  ssl_cafile: "/path/ke/ca-cert.pem"
+  ssl_certfile: null                 # isi jika pakai mTLS
+  ssl_keyfile: null
+  ssl_check_hostname: true
+
+# Kosongkan list ini jika cluster full KRaft (tanpa ZooKeeper)
+zookeeper_hosts:
+  - "zk1.internal:2181"
+  - "zk2.internal:2181"
+
+# Opsional - hanya untuk item yang butuh cek OS-level (non-root, file permission, JMX).
+# Kosongkan list ini kalau tidak mau/tidak bisa memberi akses SSH ke tool ini.
+ssh_targets: []
+#  - host: "broker1.internal"
+#    port: 22
+#    username: "deploy"
+#    key_filename: "/home/user/.ssh/id_rsa"
+#    role: "broker"          # broker | zookeeper
+#  - host: "zk1.internal"
+#    username: "deploy"
+#    key_filename: "/home/user/.ssh/id_rsa"
+#    role: "zookeeper"
+
+# Opsional - untuk cek REST API Kafka Connect / Schema Registry
+ecosystem_targets: []
+#  - name: "kafka-connect"
+#    url: "https://connect.internal:8083"
+#  - name: "schema-registry"
+#    url: "https://schema-registry.internal:8081"
+
+# Opsional - override/tambah daftar versi Kafka yang diketahui rentan
+known_cve_versions: {}
+#  "3.4.0": "Contoh catatan CVE spesifik versi ini"

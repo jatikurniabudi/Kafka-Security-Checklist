@@ -1,0 +1,7 @@
+kafka-python>=2.0.2
+PyYAML>=6.0
+requests>=2.31.0
+cryptography>=42.0.0
+# Opsional - hanya perlu jika dipakai:
+paramiko>=3.4.0
+kazoo>=2.9.0
